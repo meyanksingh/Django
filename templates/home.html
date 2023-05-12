@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}Home Page{% endblock title %}
+
+{% block main %}
+
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+    }
+    
+    form {
+      width: 500px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    img{
+      height:70px;
+    }
+    
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    
+    input[type="file"] {
+      margin-bottom: 20px;
+    }
+    
+    button[type="submit"] {
+      background-color: #4CAF50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    button[type="submit"]:hover {
+      background-color: #3e8e41;
+    }
+  </style>
+</head>
+<body>
+  <a href="{% url 'logout' %}" class='btn btn-danger'>Logout</a>
+
+  <h1>Add a New Recipe</h1>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="recipe-name">Recipe Name:</label>
+    <input type="text" id="recipe-name" name="recipe-name">
+    <label for="recipe-description">Recipe Description:</label>
+    <textarea id="recipe-description" name="recipe-description"></textarea>
+    <label for="recipe-image">Recipe Image:</label>
+    <input type="file" id="recipe-image" name="recipe-image">
+    <button type="submit">Submit</button>
+  </form>
+
+  <table class ='table'>
+    <thead>
+      <tr>
+        <th>Recipe Name</th>
+        <th>Description</th>
+        <th>Image</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for r in recipes %}
+        <tr>
+          <td>{{ r.rname }}</td>
+          <td>{{ r.rdesc }}</td>
+          <td><img src='/media/{{r.rimg}}'></td>
+          <td>
+            <a href='delete/{{r.id}}/' type="button" class="btn btn-danger">Delete</a>
+            <a href='update/{{r.id}}/' type="button" class="btn btn-success">Update</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock main %}
